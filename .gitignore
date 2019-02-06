@@ -6,3 +6,7 @@ site
 dist
 lib
 yarn.lock
+
+# Code coverage
+coverage
+.nyc_output

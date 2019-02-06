@@ -727,7 +727,7 @@ export function toIdSchema(
       field,
       fieldId,
       definitions,
-      formData[name],
+      formData,
       idPrefix
     );
   }

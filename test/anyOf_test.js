@@ -530,24 +530,23 @@ describe("anyOf", () => {
   });
 
   describe("Arrays", () => {
-    it("should correctly render form inputs for anyOf inside array items", () => {
+    it("should correctly render mixed types for oneOf inside array items", () => {
       const schema = {
         type: "object",
         properties: {
           items: {
             type: "array",
             items: {
-              type: "object",
               anyOf: [
                 {
-                  properties: {
-                    foo: {
-                      type: "string",
-                    },
-                  },
+                  type: "string",
                 },
                 {
+                  type: "object",
                   properties: {
+                    foo: {
+                      type: "integer",
+                    },
                     bar: {
                       type: "string",
                     },
@@ -567,9 +566,14 @@ describe("anyOf", () => {
 
       Simulate.click(node.querySelector(".array-item-add button"));
 
-      expect(node.querySelectorAll("select")).to.have.length.of(1);
+      const $select = node.querySelector("select");
+      expect($select).not.eql(null);
+      Simulate.change($select, {
+        target: { value: $select.options[1].value },
+      });
 
       expect(node.querySelectorAll("input#root_foo")).to.have.length.of(1);
+      expect(node.querySelectorAll("input#root_bar")).to.have.length.of(1);
     });
   });
 });
